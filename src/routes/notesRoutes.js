@@ -55,4 +55,45 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Eliminar una nota
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedNote = await Note.findByIdAndDelete(id);
+    if (!deletedNote)
+      return res.status(404).json({ error: "Note no eliminada" });
+    res.status(200).json({ message: "Nota eliminada correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar una nota", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Editar una nota
+router.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { title, description, priority, isCompleted } = req.body;
+
+    // Validación básica si se envían datos
+    if (title === "" || description === "") {
+      return res.status(400).json({ error: "El título y la descripción no pueden estar vacíos" });
+    }
+
+    const updatedNote = await Note.findByIdAndUpdate(
+      id,
+      { title, description, priority, isCompleted },
+      { new: true }
+    );
+    if (!updatedNote)
+      return res.status(404).json({ error: "Nota no encontrada" });
+    res
+      .status(200)
+      .json({ message: "Nota actualizada correctamente", note: updatedNote });
+  } catch (error) {
+    console.error("Error al actualizar una nota", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 export default router;
