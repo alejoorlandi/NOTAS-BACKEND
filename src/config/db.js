@@ -2,10 +2,17 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("Base de datos conectada correctamente");
+    const dbURI = process.env.MONGODB_URI;
+
+    if (!dbURI) {
+      throw new Error("MONGODB_URI no está definida en el .env");
+    }
+
+    await mongoose.connect(dbURI);
+
+    console.log("MongoDB conectado correctamente");
   } catch (error) {
-    console.error("Error al conectar a la base de datos:", error);
+    console.error("Error al conectar a MongoDB:", error.message);
     process.exit(1);
   }
 };
