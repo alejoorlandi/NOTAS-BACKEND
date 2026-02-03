@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://696ebacf5d6b7cc049ddede6--eclectic-custard-0f3ec0.netlify.app",
+      "https://front-eta-orcin.vercel.app",
     ],
   })
 );
@@ -25,6 +25,6 @@ const PORT = process.env.PORT || 3001;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Servidor levantado en puerto http://localhost:${PORT}`);
+console.log(`Servidor levantado en puerto ${PORT}`);
   });
 });
