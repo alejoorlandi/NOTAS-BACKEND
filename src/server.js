@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://front-eta-orcin.vercel.app",
+     "https://front-jorfp6y2k-alejos-projects-4a7fb234.vercel.app",
     ],
   })
 );
